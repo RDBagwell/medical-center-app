@@ -1,12 +1,12 @@
 package GUI.Panels;
 
+import helper.Helper;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
 public class LoginPanel extends JPanel {
-    private static final String VALID_USERNAME = "admin";
-    private static final String VALID_PASSWORD = "password";
 
     public LoginPanel(JFrame frame) {
         setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -34,7 +34,7 @@ public class LoginPanel extends JPanel {
         loginButton.addActionListener((ActionEvent _) -> {
             String username = usernameField.getText();
             String password = new String(passwordField.getPassword());
-            if (username.equals(VALID_USERNAME) && password.equals(VALID_PASSWORD)) {
+            if (Helper.checkUser(username,password)) {
                 // Create an instance of the MainApplicationPanel class
                 MainApplicationPanel mainPanel = new MainApplicationPanel();
                 // Add the main panel to the frame
