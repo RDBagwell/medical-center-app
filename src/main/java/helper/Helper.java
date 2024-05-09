@@ -10,7 +10,6 @@ import database.database;
 
 
 public class Helper {
-    private static final Logger logger = Logger.getLogger(Helper.class.getName());
 
     public static boolean checkUser(String userName, String password) {
         try {

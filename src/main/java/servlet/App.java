@@ -25,7 +25,7 @@ public class App {
                 }
             }
             JSONArray jsonArray = new JSONArray(jsonData);
-            System.out.println(jsonArray.toString());
+            System.out.println(jsonArray);
         } catch (SQLException e) {
             logger.severe(e.toString());
         }
