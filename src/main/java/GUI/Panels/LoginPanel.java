@@ -31,31 +31,23 @@ public class LoginPanel extends JPanel {
         add(loginButton);
 
         // Add ActionListener to the login button
-        loginButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                // Get the entered username and password
-                String username = usernameField.getText();
-                String password = new String(passwordField.getPassword());
-
-                // Check if the username and password are valid
-                if (username.equals(VALID_USERNAME) && password.equals(VALID_PASSWORD)) {
-                    // Create an instance of the MainApplicationPanel class
-                    MainApplicationPanel mainPanel = new MainApplicationPanel();
-                    
-                    // Add the main panel to the frame
-                    frame.getContentPane().removeAll(); // Remove previous components
-                    frame.add(mainPanel);
-                    frame.revalidate();
-                    frame.repaint();
-                } else {
-                    JOptionPane.showMessageDialog(frame, "Invalid username or password", "Error", JOptionPane.ERROR_MESSAGE);
-                }
-
-                // Clear the fields after checking
-                usernameField.setText("");
-                passwordField.setText("");
+        loginButton.addActionListener((ActionEvent e) -> {
+            String username = usernameField.getText();
+            String password = new String(passwordField.getPassword());
+            if (username.equals(VALID_USERNAME) && password.equals(VALID_PASSWORD)) {
+                // Create an instance of the MainApplicationPanel class
+                MainApplicationPanel mainPanel = new MainApplicationPanel();
+                // Add the main panel to the frame
+                frame.getContentPane().removeAll(); // Remove previous components
+                frame.add(mainPanel);
+                frame.revalidate();
+                frame.repaint();
+            } else {
+                JOptionPane.showMessageDialog(frame, "Invalid username or password", "Error", JOptionPane.ERROR_MESSAGE);
             }
+            // Clear the fields after checking
+            usernameField.setText("");
+            passwordField.setText("");
         });
-
     }
 }
