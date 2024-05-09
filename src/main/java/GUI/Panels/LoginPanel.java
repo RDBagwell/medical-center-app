@@ -9,10 +9,10 @@ public class LoginPanel extends JPanel {
     private static final String VALID_PASSWORD = "password";
 
     public LoginPanel(JFrame frame) {
-        setLayout(new GridLayout(3, 2));
+        setLayout(new FlowLayout(FlowLayout.LEFT));
         // Create text fields for username and password
-        JTextField usernameField = new JTextField(200);
-        JPasswordField passwordField = new JPasswordField(200);
+        JTextField usernameField = new JTextField(300);
+        JPasswordField passwordField = new JPasswordField(300);
 
         // Create labels for text fields
         JLabel usernameLabel = new JLabel("Username:");
