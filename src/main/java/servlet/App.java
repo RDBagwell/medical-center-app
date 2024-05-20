@@ -6,11 +6,15 @@ import java.sql.*;
 import java.util.logging.Logger;
 
 import database.database;
+import helper.AutoLogout;
 
 public class App {
     private static final Logger logger = Logger.getLogger(App.class.getName());
+
     public static void main(String[] args) {
         try {
+            AutoLogout autoLogout = new AutoLogout();
+            autoLogout.startLogoutTimer();
             database db = new database();
             String[] arr = {};
             List<JSONObject> jsonData;

@@ -13,9 +13,9 @@ public class database {
         try {
             String userName = "root";
             String password = "password";
-            String host = "localhost:3307";
-            String dbName = "central_db";
-            String url = "jdbc:mysql://" + host + "/" + dbName;
+            String host     = "localhost:3307";
+            String dbName   = "central_db";
+            String url      = "jdbc:mysql://" + host + "/" + dbName;
             con = DriverManager.getConnection(url, userName, password);
         } catch (Exception e) {
             logger.severe(e.toString());
@@ -28,17 +28,16 @@ public class database {
         return rs;
     }
 
-    public ResultSet select(String table, String[] flds, String cnd, String ord) throws SQLException {
+    public ResultSet select(String table, String[] columns, String cnd, String ord) throws SQLException {
         String fields = "*";
-        if (flds.length > 0)
-            fields = String.join((", "), flds);
+        if (columns.length > 0)
+            fields = String.join((", "), columns);
         if (!cnd.isEmpty())
             cnd = " WHERE " + cnd;
         if (!ord.isEmpty())
             ord = " ORDER BY " + ord;
 
         String query = "SELECT " + fields + " FROM " + table + cnd + ord + ";";
-        // System.out.println(query);
         rs = null;
         st = con.createStatement();
         rs = st.executeQuery(query);
@@ -48,8 +47,7 @@ public class database {
     public void insert(String table, String[] flds, Object[] vals) throws SQLException {
         String columns = String.join((", "), flds);
 
-        String temp2 = "?, ".repeat(Math.max(0, flds.length - 1)) +
-                "?";
+        String temp2 = "?, ".repeat(Math.max(0, flds.length - 1)) + "?";
 
         String query = "INSERT INTO " + table + "(" + columns + ") VALUES (" + temp2 + ");";
 

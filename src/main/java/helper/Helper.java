@@ -6,35 +6,25 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import database.database;
+import Model.User;
 
 
 public class Helper {
 
     public static boolean checkUser(String userName, String password) {
         try {
-            String userPass = getObjects(userName);
+            ResultSet user = User.getUser(userName);
+            String userPass = "";
+            while (user.next()) {
+                userPass = user.getString("password");
+            }
             return encryptPassword(password).equals(userPass);
         } catch (NoSuchAlgorithmException | SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private static String getObjects(String name) throws SQLException {
-        database db = new database();
-        String[] arr = {"password"};
-        String uname;
-        uname = name;
-        String pass = "";
-        try (ResultSet rs = db.select("`test`", arr, "`name` = '" + uname + "'", "")) {
-            while (rs.next()) {
-                pass = rs.getString("password");
-            }
-        }
-        return pass;
-    }
-
-
-    private static String encryptPassword(String password) throws NoSuchAlgorithmException {
+    public static String encryptPassword(String password) throws NoSuchAlgorithmException {
         MessageDigest md = MessageDigest.getInstance("SHA-256");
         byte[] hashedPassword = md.digest(password.getBytes());
         // Convert byte array to a string
@@ -42,7 +32,6 @@ public class Helper {
         for (byte b : hashedPassword) {
             sb.append(String.format("%02x", b));
         }
-
         return sb.toString();
     }
 }
