@@ -20,13 +20,12 @@ public class LoginGUI {
 //        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-//        LoginPanel loginPanel = new LoginPanel(frame);
+        LoginPanel loginPanel = new LoginPanel(frame);
         AddUser addUser = new AddUser(frame);
-        SelectUser selectUser = new SelectUser(frame);
+        UpdateUser updateUser = new UpdateUser(frame);
 
         // Add the login panel to the frame
-//        frame.add(addUser, BorderLayout.CENTER);
-        frame.add(selectUser, BorderLayout.CENTER);
+        frame.add(updateUser, BorderLayout.CENTER);
 
         // Center the frame on the screen
         frame.setLocationRelativeTo(null);

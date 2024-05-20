@@ -10,32 +10,26 @@ import java.sql.*;
 import helper.Helper;
 import Model.User;
 
-public class AddUser extends JPanel {
-
-    public AddUser(JFrame frame) {
+public class UpdateUser extends JPanel {
+    public UpdateUser(JFrame frame) {
         setLayout(new FlowLayout(FlowLayout.LEFT));
-        // Create text fields for username and password
+
         JTextField usernameField = new JTextField(77);
         JPasswordField passwordField = new JPasswordField(77);
 
-        // Create labels for text fields
         JLabel usernameLabel = new JLabel("Username:");
         JLabel passwordLabel = new JLabel("Password:");
 
-        // Add components to the login panel
         add(usernameLabel);
         add(usernameField);
         add(passwordLabel);
         add(passwordField);
 
-        // Create a JButton for Add User
-        JButton addButton = new JButton("Add User");
+        JButton updateButton = new JButton("Update User");
 
-        // Add the Add User button to the Add User panel
-        add(addButton);
+        add(updateButton);
 
-        // Add ActionListener to the Add User button
-        addButton.addActionListener((ActionEvent _) -> {
+        updateButton.addActionListener((ActionEvent _) -> {
             String username = usernameField.getText();
             String password = new String(passwordField.getPassword());
             try {

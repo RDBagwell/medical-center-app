@@ -28,26 +28,26 @@ public class database {
         return rs;
     }
 
-    public ResultSet select(String table, String[] columns, String cnd, String ord) throws SQLException {
+    public ResultSet select(String table, String[] columns, String clause , String ord) throws SQLException {
         String fields = "*";
         if (columns.length > 0)
             fields = String.join((", "), columns);
-        if (!cnd.isEmpty())
-            cnd = " WHERE " + cnd;
+        if (!clause .isEmpty())
+            clause  = " WHERE " + clause ;
         if (!ord.isEmpty())
             ord = " ORDER BY " + ord;
 
-        String query = "SELECT " + fields + " FROM " + table + cnd + ord + ";";
+        String query = "SELECT " + fields + " FROM " + table + clause  + ord + ";";
         rs = null;
         st = con.createStatement();
         rs = st.executeQuery(query);
         return rs;
     }
 
-    public void insert(String table, String[] flds, Object[] vals) throws SQLException {
-        String columns = String.join((", "), flds);
+    public void insert(String table, String[] cols, Object[] vals) throws SQLException {
+        String columns = String.join((", "), cols);
 
-        String temp2 = "?, ".repeat(Math.max(0, flds.length - 1)) + "?";
+        String temp2 = "?, ".repeat(Math.max(0, cols.length - 1)) + "?";
 
         String query = "INSERT INTO " + table + "(" + columns + ") VALUES (" + temp2 + ");";
 
@@ -60,14 +60,14 @@ public class database {
         pst.executeUpdate();
     }
 
-    public void update(String table, String[] flds, Object[] vals, int id) throws SQLException {
+    public void update(String table, String[] columns, Object[] vals, String clause ) throws SQLException {
         int i;
         StringBuilder temp2 = new StringBuilder();
-        for (i = 0; i < flds.length - 1; i++) {
-            temp2.append(flds[i]).append(" = ?, ");
+        for (i = 0; i < columns.length - 1; i++) {
+            temp2.append(columns[i]).append(" = ?, ");
         }
-        temp2.append(flds[i]).append(" = ?");
-        String query = "UPDATE " + table + " SET " + temp2 + " WHERE `id` = " + id+ ";";
+        temp2.append(columns[i]).append(" = ?");
+        String query = "UPDATE " + table + " SET " + temp2 + clause  + ";";
         PreparedStatement pst = con.prepareStatement(query);
 
         for (int j = 0; j < vals.length; j++) {

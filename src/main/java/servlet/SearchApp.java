@@ -13,14 +13,14 @@ public class SearchApp extends JFrame {
 
     public SearchApp() {
         setTitle("Search Application");
-        setSize(400, 300);
+        setSize(600, 300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
         searchField = new JTextField();
         JButton searchButton = new JButton("Search");
 
-        tableModel = new DefaultTableModel();
+        tableModel = new DefaultTableModel(new Object[]{"Id", "Name"}, 0);
         JTable resultTable = new JTable(tableModel);
 
         JScrollPane scrollPane = new JScrollPane(resultTable);
@@ -44,20 +44,12 @@ public class SearchApp extends JFrame {
 
     private void executeSearch(String searchTerm) {
         try {
-//            // Establishing connection to the database
-//            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/yourdatabase", "username", "password");
-//
-//            // Creating SQL statement
-//            String sql = "SELECT * FROM your_table WHERE column_name LIKE ?";
-//            PreparedStatement statement = conn.prepareStatement(sql);
-//            statement.setString(1, "%" + searchTerm + "%");
 
             // Executing the query
             ResultSet resultSet = User.getUser(searchTerm);
 
             // Clear previous table data
             tableModel.setRowCount(0);
-
             // Populate the table with search results
             ResultSetMetaData metaData = resultSet.getMetaData();
             int columnCount = metaData.getColumnCount();

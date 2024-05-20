@@ -11,8 +11,8 @@ public class LoginPanel extends JPanel {
     public LoginPanel(JFrame frame) {
         setLayout(new FlowLayout(FlowLayout.LEFT));
         // Create text fields for username and password
-        JTextField usernameField = new JTextField(300);
-        JPasswordField passwordField = new JPasswordField(300);
+        JTextField usernameField = new JTextField(77);
+        JPasswordField passwordField = new JPasswordField(77);
 
         // Create labels for text fields
         JLabel usernameLabel = new JLabel("Username:");
