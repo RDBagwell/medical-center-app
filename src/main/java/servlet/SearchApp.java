@@ -5,7 +5,6 @@ import Model.User;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.*;
 import java.sql.*;
 
 public class SearchApp extends JFrame {
@@ -33,15 +32,12 @@ public class SearchApp extends JFrame {
         add(searchPanel, BorderLayout.NORTH);
         add(scrollPane, BorderLayout.CENTER);
 
-        searchButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String searchTerm = searchField.getText().trim();
-                if (!searchTerm.isEmpty()) {
-                    executeSearch(searchTerm);
-                } else {
-                    JOptionPane.showMessageDialog(SearchApp.this, "Please enter a search term", "Error", JOptionPane.ERROR_MESSAGE);
-                }
+        searchButton.addActionListener(_ -> {
+            String searchTerm = searchField.getText().trim();
+            if (!searchTerm.isEmpty()) {
+                executeSearch(searchTerm);
+            } else {
+                JOptionPane.showMessageDialog(SearchApp.this, "Please enter a search term", "Error", JOptionPane.ERROR_MESSAGE);
             }
         });
     }
@@ -76,16 +72,12 @@ public class SearchApp extends JFrame {
             // Closing the resources
             resultSet.close();
         } catch (SQLException ex) {
-            ex.printStackTrace();
+//            ex.printStackTrace();
             JOptionPane.showMessageDialog(this, "An error occurred while executing the search", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                new SearchApp().setVisible(true);
-            }
-        });
+        SwingUtilities.invokeLater(() -> new SearchApp().setVisible(true));
     }
 }
