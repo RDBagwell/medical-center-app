@@ -35,7 +35,7 @@ public class AddUser extends JPanel {
         add(addButton);
 
         // Add ActionListener to the Add User button
-        addButton.addActionListener((ActionEvent _) -> {
+        addButton.addActionListener(event-> {
             String username = usernameField.getText();
             String password = new String(passwordField.getPassword());
             try {

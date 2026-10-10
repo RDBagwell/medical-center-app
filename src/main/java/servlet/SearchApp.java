@@ -32,7 +32,7 @@ public class SearchApp extends JFrame {
         add(searchPanel, BorderLayout.NORTH);
         add(scrollPane, BorderLayout.CENTER);
 
-        searchButton.addActionListener(_ -> {
+        searchButton.addActionListener(event-> {
             String searchTerm = searchField.getText().trim();
             if (!searchTerm.isEmpty()) {
                 executeSearch(searchTerm);

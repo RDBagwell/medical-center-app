@@ -29,7 +29,7 @@ public class UpdateUser extends JPanel {
 
         add(updateButton);
 
-        updateButton.addActionListener((ActionEvent _) -> {
+        updateButton.addActionListener(event-> {
             String username = usernameField.getText();
             String password = new String(passwordField.getPassword());
             try {

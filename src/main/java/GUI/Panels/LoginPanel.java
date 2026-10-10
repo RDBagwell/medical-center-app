@@ -31,7 +31,7 @@ public class LoginPanel extends JPanel {
         add(loginButton);
 
         // Add ActionListener to the login button
-        loginButton.addActionListener((ActionEvent _) -> {
+        loginButton.addActionListener(event-> {
             String username = usernameField.getText();
             String password = new String(passwordField.getPassword());
             if (Helper.checkUser(username,password)) {
