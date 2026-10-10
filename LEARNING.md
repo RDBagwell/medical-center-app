@@ -16,7 +16,7 @@ Legend: `[ ]` not started · `[~]` in progress · `[x]` done
 
 The existing code works, but it has the classic problems every language has. Fixing them is the first set of lessons.
 
-- [ ] **1. Build tools and project layout.** *Concept:* reproducible builds and dependency management. *Task:* a code tour (what's here, what you remember), then convert to a **Maven** project: create `pom.xml`, use the standard `src/main/java` layout, replace the committed `.jar` files in `lib/` with Maven dependencies, and get it compiling and launching. *Laravel parallel:* `composer.json`.
+- [~] **1. Build tools and project layout.** *(In progress: `pom.xml` done, `mvn clean compile` = BUILD SUCCESS on Java 21. Left: `git rm lib/`, `exec-maven-plugin` launch, re-import in IntelliJ from the pom and drop the `.iml`.)* *Concept:* reproducible builds and dependency management. *Task:* a code tour (what's here, what you remember), then convert to a **Maven** project: create `pom.xml`, use the standard `src/main/java` layout, replace the committed `.jar` files in `lib/` with Maven dependencies, and get it compiling and launching. *Laravel parallel:* `composer.json`.
 - [ ] **2. A reproducible database.** *Concept:* schema as code; environments anyone can recreate. *Task:* MySQL in `docker-compose.yml`, the schema in a versioned SQL migration (Flyway), and a fake-data seed script. *Laravel parallel:* migrations and seeders.
 - [ ] **3. Configuration and secrets.** *Concept:* config is not code; secrets never go in the repo. *Task:* move the hardcoded `root` / `password` connection details to environment variables or an untracked properties file, with a committed example file. *Laravel parallel:* `.env` and `config/`.
 - [ ] **4. SQL injection.** *Concept:* never mix code and data; parameterize everything. *Task:* first, prove the login bug (a username of `' OR '1'='1`). Then fix `User.getUser()`, `select()` and `delete()` so every query uses `PreparedStatement`. *Laravel parallel:* why Eloquent and query bindings protect you, and where raw queries don't.
@@ -93,4 +93,4 @@ The existing code works, but it has the classic problems every language has. Fix
 
 Newest entry first. One or two lines per session: date, lesson, what got done, the next step.
 
-- *(no sessions yet)*
+- **2026-10-10 — Lesson 1 (in progress).** Code tour; reproducible builds and Maven vs. Composer; compile vs. runtime classpath (proved the MySQL driver is only needed at runtime → `runtime` scope). Robert wrote `pom.xml` (`io.github.rdbagwell:medical-center-app`, release 21), renamed the `_` lambda params, and got BUILD SUCCESS from the terminal. **Next:** review the final pom, `git rm lib/`, `exec:java` to launch the window, IntelliJ re-import, then journal entry and tick Lesson 1.
