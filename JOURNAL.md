@@ -21,3 +21,5 @@ pom.xml Project Object Model. Is an XML file that serves as the core configurati
 In PHP/Laravel: composer.json composer install
 
 In Java: pom.xml mvn compile
+
+My code never imports MySQL-specific classes directly. Instead, database.java uses Java's built-in JDBC classes to connect to the database, so the MySQL driver only needs to be there when the program runs. I left org.json at the default compile scope because App.java uses its classes directly. When I ran the program, I got an "Unknown database 'central_db'" error instead of a driver error. That helped me understand that the MySQL driver was loading correctly, and the problem was that the database couldn't be found.
