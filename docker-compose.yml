@@ -1,0 +1,20 @@
+services:
+  db:
+    container_name: medical-center-app-mysql
+    image: mysql:8.4.6        # an exact tag, never :latest
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h db -u root -p$$MYSQL_ROOT_PASSWORD"]
+      interval: 10s
+      retries: 5
+    ports:
+      - "3308:3306"             # host:container
+    environment:
+      - MYSQL_DATABASE=central_db
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    volumes:
+      - central_db-data:/var/lib/mysql
+volumes:
+  central_db-data:
