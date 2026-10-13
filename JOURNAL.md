@@ -41,16 +41,7 @@ First I created a docker-compose.yml to create a MYSQL container to run the data
 | **Track applied migrations** | Laravel migrations table | `flyway_schema_history` table |
 | **Run again** | Seeders can be run again, depending on their logic | Applied versioned migrations normally run only once |
 
-Think of Laravel as providing two separate tools for two related jobs:
-- Migrations: Build or modify the database.
-- Seeders: Populate the database with the initial data the application needs.
-  With Java and Flyway, those jobs can be handled by the same migration system. You can create the tables and insert the default roles in separate, numbered SQL files.
-  One important detail: Flyway normally runs each versioned migration only once. If you later add another role, you generally create a new migration rather than editing a migration that's already been applied to a permanent environment.
-
-Product Documentation
-+1
-
-
-
-That leads to one final distinction. In Laravel, it's easy to rerun a seeder when setting up a development database. With Flyway, you need to decide whether the data is a one-time database change, permanent reference data, or disposable test data. Each may be best handled differently.
-The bottom line: Laravel provides separate, ready-made workflows for migrations and seeders. Flyway provides a version-controlled workflow for database changes, including data inserts, while leaving you to decide how to organize other data setup and test fixtures.
+## Lesson 3 Configuration and secrets 2026-12-10
+*Concept:* config is not code; secrets never go in the repo.
+This Lesson was all about keeping config vars out of code. Java doesn't read .env files natively, unlike Laravel.
+I created an AppConfig and Migrate to handle database setup, connection, and seeding without the need to set $evn varables in the terminal. In the pom.xml, I added Flyway as a dependency rather than having it in the plugins. And set exec.mainClass to run the app in one command.
