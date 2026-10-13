@@ -41,7 +41,7 @@ First I created a docker-compose.yml to create a MYSQL container to run the data
 | **Track applied migrations** | Laravel migrations table | `flyway_schema_history` table |
 | **Run again** | Seeders can be run again, depending on their logic | Applied versioned migrations normally run only once |
 
-## Lesson 3 Configuration and secrets 2026-12-10
+## Lesson 3 Configuration and secrets 2026-13-10
 *Concept:* config is not code; secrets never go in the repo.
 This Lesson was all about keeping config vars out of code. Java doesn't read .env files natively, unlike Laravel.
 I created an AppConfig and Migrate to handle database setup, connection, and seeding without the need to set $evn varables in the terminal. In the pom.xml, I added Flyway as a dependency rather than having it in the plugins. And set exec.mainClass to run the app in one command.
