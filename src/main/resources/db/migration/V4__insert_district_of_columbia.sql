@@ -1,0 +1,1 @@
+INSERT INTO states (name, code) VALUES ("District of Columbia","DC")

@@ -2,6 +2,7 @@ package database;
 
 import java.sql.*;
 import java.util.logging.Logger;
+import config.AppConfig;
 
 public class database {
     private static final Logger logger = Logger.getLogger(database.class.getName());
@@ -10,12 +11,10 @@ public class database {
     private Connection con = null;
 
     public database() throws SQLDataException {
+        String userName = AppConfig.MYSQL_USER;
+        String password = AppConfig.MYSQL_PASSWORD;
+        String url      = AppConfig.DB_URL;
         try {
-            String userName = "root";
-            String password = "password";
-            String host     = "localhost:3307";
-            String dbName   = "central_db";
-            String url      = "jdbc:mysql://" + host + "/" + dbName;
             con = DriverManager.getConnection(url, userName, password);
         } catch (Exception e) {
             logger.severe(e.toString());
