@@ -24,7 +24,7 @@ In Java: pom.xml mvn compile
 
 My code never imports MySQL-specific classes directly. Instead, database.java uses Java's built-in JDBC classes to connect to the database, so the MySQL driver only needs to be there when the program runs. I left org.json at the default compile scope because App.java uses its classes directly. When I ran the program, I got an "Unknown database 'central_db'" error instead of a driver error. That helped me understand that the MySQL driver was loading correctly, and the problem was that the database couldn't be found.
 
-## Lesson 2 A reproducible database 2026-11-10
+## Lesson 2 A reproducible database 2026-10-11
 *Concept:* schema as code; environments anyone can recreate.
 
 This focused more on building a reproducible seeder database. 
@@ -41,7 +41,9 @@ First I created a docker-compose.yml to create a MYSQL container to run the data
 | **Track applied migrations** | Laravel migrations table | `flyway_schema_history` table |
 | **Run again** | Seeders can be run again, depending on their logic | Applied versioned migrations normally run only once |
 
-## Lesson 3 Configuration and secrets 2026-13-10
+## Lesson 3 Configuration and secrets 2026-10-13
 *Concept:* config is not code; secrets never go in the repo.
 This Lesson was all about keeping config vars out of code. Java doesn't read .env files natively, unlike Laravel.
 I created an AppConfig and Migrate to handle database setup, connection, and seeding without the need to set $evn varables in the terminal. In the pom.xml, I added Flyway as a dependency rather than having it in the plugins. And set exec.mainClass to run the app in one command.
+
+Laravel uses the .env file to store settings such as database credentials and application names. The env() function reads these environment values, usually inside configuration files like config/app.php or config/database.php, where Laravel uses them to build its configuration array. The config() function then retrieves those loaded settings anywhere in your application.
