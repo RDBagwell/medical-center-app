@@ -23,8 +23,8 @@ public class User {
     public static ResultSet getUser(String userName) throws SQLException {
         database db = new database();
         String[] filters = {};
-        String where = "user_name = '"+userName+"'";
-        return db.select("users", filters, where, "");
+        String where = "user_name = ?";
+        return db.select("users", filters, where, "", userName);
     }
 
     public static void updateUser(String[] columns, Object[] vals, String clause) throws SQLException{
