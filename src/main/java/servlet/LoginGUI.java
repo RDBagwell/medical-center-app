@@ -3,7 +3,6 @@ package servlet;
 import javax.swing.*;
 import GUI.Panels.*;
 import java.awt.*;
-import java.awt.event.*;
 import helper.AutoLogout;
 
 public class LoginGUI {

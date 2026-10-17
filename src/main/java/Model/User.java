@@ -8,10 +8,11 @@ import java.sql.SQLException;
 public class User {
 
     public static void add(Object[] data) throws SQLException {
-        database db = new database();
-        String[] columns = {"user_name","password"};
-        db.insert("users", columns, data);
-        db.close();
+        try (database db = new database()) {
+            String[] columns = {"user_name", "password"};
+            db.insert("users", columns, data);
+        }
+
     }
 
     public static ResultSet getUsers() throws SQLException {
@@ -27,9 +28,9 @@ public class User {
         return db.select("users", filters, where, "", userName);
     }
 
-    public static void updateUser(String[] columns, Object[] vals, String clause) throws SQLException{
-        database db = new database();
-        db.update("users", columns, vals, clause);
-        db.close();
+    public static void updateUser(String[] columns, Object[] vals, String clause) throws SQLException {
+        try (database db = new database()) {
+            db.update("users", columns, vals, clause);
+        }
     }
 }

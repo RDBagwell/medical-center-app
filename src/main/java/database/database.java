@@ -1,25 +1,16 @@
 package database;
 
 import java.sql.*;
-import java.util.logging.Logger;
-
 import config.AppConfig;
 
-public class database {
-    private static final Logger logger = Logger.getLogger(database.class.getName());
-    private Statement st;
-    private ResultSet rs;
-    private static Connection con = null;
+public class database implements AutoCloseable {
+    private final Connection con;
 
-    public database() throws SQLDataException {
+    public database() throws SQLException {
         String userName = AppConfig.MYSQL_USER;
         String password = AppConfig.MYSQL_PASSWORD;
         String url = AppConfig.DB_URL;
-        try {
-            con = DriverManager.getConnection(url, userName, password);
-        } catch (Exception e) {
-            logger.severe(e.toString());
-        }
+        con = DriverManager.getConnection(url, userName, password);
     }
 
     public ResultSet query(
@@ -82,15 +73,6 @@ public class database {
         executeSQL(sql, id);
     }
 
-    public void truncate(
-            String tbl
-    ) throws SQLException {
-        String query = "TRUNCATE TABLE " + tbl;
-        System.out.println(query);
-        st = con.createStatement();
-        st.executeQuery(query);
-    }
-
     public void close() throws SQLException {
         con.close();
     }
@@ -120,9 +102,10 @@ public class database {
             String sql,
             Object... params
     ) throws SQLException {
-        PreparedStatement pst = con.prepareStatement(sql);
-        bindParameters(pst, params);
-        return pst.executeUpdate();
+        try (PreparedStatement pst = con.prepareStatement(sql)) {
+            bindParameters(pst, params);
+            return pst.executeUpdate();
+        }
     }
 
 }
