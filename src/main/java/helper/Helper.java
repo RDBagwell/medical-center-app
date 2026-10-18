@@ -1,23 +1,22 @@
 package helper;
 
+import Model.User;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import database.database;
-import Model.User;
+import java.util.Optional;
 
 
 public class Helper {
 
     public static boolean checkUser(String userName, String password) {
         try {
-            ResultSet user = User.getUser(userName);
-            String userPass = "";
-            while (user.next()) {
-                userPass = user.getString("password");
+            Optional<User> result = User.getUser(userName);
+            if (result.isEmpty()) {
+                return false;
             }
+            String userPass = result.get().passwordHash();
             return encryptPassword(password).equals(userPass);
         } catch (NoSuchAlgorithmException | SQLException e) {
             throw new RuntimeException(e);

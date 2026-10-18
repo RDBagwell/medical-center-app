@@ -1,14 +1,13 @@
 package GUI.Panels;
 
+import Model.User;
+import helper.Helper;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.security.NoSuchAlgorithmException;
-import java.sql.ResultSet;
-import java.sql.*;
-
-import helper.Helper;
-import Model.User;
+import java.sql.SQLException;
+import java.util.Optional;
 
 public class UpdateUser extends JPanel {
     public UpdateUser(JFrame frame) {
@@ -29,17 +28,17 @@ public class UpdateUser extends JPanel {
 
         add(updateButton);
 
-        updateButton.addActionListener(event-> {
-            String username = usernameField.getText();
+        updateButton.addActionListener(event -> {
+            String userName = usernameField.getText();
             String password = new String(passwordField.getPassword());
             try {
                 Object[] data;
                 data = new Object[]{
-                        username,
+                        userName,
                         Helper.encryptPassword(password)
                 };
-                ResultSet user = User.getUser(username);
-                if(!user.next()){
+                Optional<User> existing = User.getUser(userName);
+                if (existing.isEmpty()) {
                     User.add(data);
                     LoginPanel loginPanel = new LoginPanel(frame);
                     // Add the main panel to the frame

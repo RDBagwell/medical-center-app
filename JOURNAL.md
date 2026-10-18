@@ -73,3 +73,13 @@ I can apply a lot of what I learned in Java to Laravel. For example, Eloquent's 
 However, methods like `DB::raw`, `whereRaw()` with user input directly inside the SQL string, and `orderByRaw($input)` can introduce SQL injection vulnerabilities if I don't handle them carefully.
 
 My Java `select(table, cols, clause, ord, params...)` method is similar to Laravel's `whereRaw('user_name = ?', [$name])` because both allow me to build queries while keeping user-provided values separate from the SQL itself. This helped me understand that the same SQL security principles apply in both languages, even though the syntax is different.
+
+## Lesson 5 Resource lifecycles. 2026-10-18
+*Concept:* deterministic cleanup of connections, files and sockets.
+
+This focsed on closeing open threads and containing memory leaks.
+PHP/Laravel mostly handles this automatically, so you rarely have to think about it.
+Java handles it with try-with-resources, AutoCloseable, and returning records instead of ResultSet.
+The try-with-resources statement automates resource management, eliminating the need for manual, error-prone try-catch blocks in finally.
+AutoCloseable acts as a close() method within a try-with-resources statement.
+ResultSet leaves an open pointer; records eliminate that problem. So instead of looping through a ResultSet, you can now handle it with an if statement. e.g. f (result.isEmpty()) {…}

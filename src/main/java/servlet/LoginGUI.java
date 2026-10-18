@@ -1,9 +1,12 @@
 package servlet;
 
-import javax.swing.*;
-import GUI.Panels.*;
-import java.awt.*;
+import GUI.Panels.AddUser;
+import GUI.Panels.LoginPanel;
+import GUI.Panels.UpdateUser;
 import helper.AutoLogout;
+
+import javax.swing.*;
+import java.awt.*;
 
 public class LoginGUI {
 

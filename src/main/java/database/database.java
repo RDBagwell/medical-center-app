@@ -1,7 +1,8 @@
 package database;
 
-import java.sql.*;
 import config.AppConfig;
+
+import java.sql.*;
 
 public class database implements AutoCloseable {
     private final Connection con;
