@@ -1,11 +1,10 @@
 package GUI.Panels;
 
 import Model.User;
-import helper.Helper;
+import helper.PasswordHasher;
 
 import javax.swing.*;
 import java.awt.*;
-import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.Optional;
 
@@ -37,11 +36,12 @@ public class AddUser extends JPanel {
         addButton.addActionListener(event-> {
             String userName = usernameField.getText();
             String password = new String(passwordField.getPassword());
+
             try {
                 Optional<User> existing = User.getUser(userName);
-                Object[] data = {userName, Helper.encryptPassword(password)};
-
                 if(existing.isEmpty()){
+                    String hashed = PasswordHasher.hash(password);
+                    Object[] data = {userName, hashed};
                     User.add(data);
                     LoginPanel loginPanel = new LoginPanel(frame);
                     // Add the main panel to the frame
@@ -52,7 +52,7 @@ public class AddUser extends JPanel {
                 } else {
                     JOptionPane.showMessageDialog(frame, "User already exists", "Error", JOptionPane.ERROR_MESSAGE);
                 }
-            } catch (SQLException | NoSuchAlgorithmException e) {
+            } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
         });

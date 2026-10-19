@@ -3,6 +3,7 @@ package database;
 import config.AppConfig;
 
 import java.sql.*;
+import java.util.Arrays;
 
 public class database implements AutoCloseable {
     private final Connection con;
@@ -54,16 +55,29 @@ public class database implements AutoCloseable {
             String table,
             String[] columns,
             Object[] vals,
-            String clause
+            String clause,
+            Object... whereParams
     ) throws SQLException {
+
+        if (clause.isBlank()) {
+            throw new IllegalArgumentException("UPDATE requires a WHERE condition");
+        }
+        if(columns.length != vals.length){
+            throw new IllegalArgumentException("columns and vals need to be the same length");
+        }
+        final String where = " WHERE " + clause;
         int i;
         StringBuilder placeholders = new StringBuilder();
         for (i = 0; i < columns.length - 1; i++) {
             placeholders.append(columns[i]).append(" = ?, ");
         }
         placeholders.append(columns[i]).append(" = ?");
-        String sql = "UPDATE " + table + " SET " + placeholders + clause + ";";
-        executeSQL(sql, vals);
+        String sql = "UPDATE " + table + " SET " + placeholders + where + ";";
+        // 1. A new, longer array: vals's contents copied in, the extra slots null
+        Object[] params = Arrays.copyOf(vals, vals.length + whereParams.length);
+        // 2. Copy whereParams into those empty slots at the end
+        System.arraycopy(whereParams, 0, params, vals.length, whereParams.length);
+        executeSQL(sql, params);
     }
 
     public void delete(

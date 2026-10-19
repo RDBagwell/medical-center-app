@@ -1,11 +1,10 @@
 package GUI.Panels;
 
 import Model.User;
-import helper.Helper;
+import helper.PasswordHasher;
 
 import javax.swing.*;
 import java.awt.*;
-import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.Optional;
 
@@ -29,17 +28,16 @@ public class UpdateUser extends JPanel {
         add(updateButton);
 
         updateButton.addActionListener(event -> {
+            String[] columns = new String[]{"password"};
             String userName = usernameField.getText();
             String password = new String(passwordField.getPassword());
+
             try {
-                Object[] data;
-                data = new Object[]{
-                        userName,
-                        Helper.encryptPassword(password)
-                };
                 Optional<User> existing = User.getUser(userName);
-                if (existing.isEmpty()) {
-                    User.add(data);
+                if (existing.isPresent()) {
+                    String hashed = PasswordHasher.hash(password);
+                    Object[] data = {hashed};
+                    User.updateUser(columns, data, "id = ?", existing.get().id());
                     LoginPanel loginPanel = new LoginPanel(frame);
                     // Add the main panel to the frame
                     frame.getContentPane().removeAll(); // Remove previous components
@@ -47,9 +45,9 @@ public class UpdateUser extends JPanel {
                     frame.revalidate();
                     frame.repaint();
                 } else {
-                    JOptionPane.showMessageDialog(frame, "User already exists", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(frame, "No such use", "Error", JOptionPane.ERROR_MESSAGE);
                 }
-            } catch (SQLException | NoSuchAlgorithmException e) {
+            } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
         });

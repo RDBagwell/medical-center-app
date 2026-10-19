@@ -52,9 +52,14 @@ public record User(int id, String userName, String passwordHash) {
         }
     }
 
-    public static void updateUser(String[] columns, Object[] vals, String clause) throws SQLException {
+    public static void updateUser(
+            String[] columns,
+            Object[] vals,
+            String clause,
+            Object... whereParams
+    ) throws SQLException {
         try (database db = new database()) {
-            db.update("users", columns, vals, clause);
+            db.update("users", columns, vals, clause, whereParams);
         }
     }
 

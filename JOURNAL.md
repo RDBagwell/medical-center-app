@@ -77,9 +77,17 @@ My Java `select(table, cols, clause, ord, params...)` method is similar to Larav
 ## Lesson 5 Resource lifecycles. 2026-10-18
 *Concept:* deterministic cleanup of connections, files and sockets.
 
-This focsed on closeing open threads and containing memory leaks.
+This focused on closing open threads and containing memory leaks.
 PHP/Laravel mostly handles this automatically, so you rarely have to think about it.
 Java handles it with try-with-resources, AutoCloseable, and returning records instead of ResultSet.
 The try-with-resources statement automates resource management, eliminating the need for manual, error-prone try-catch blocks in finally.
 AutoCloseable acts as a close() method within a try-with-resources statement.
 ResultSet leaves an open pointer; records eliminate that problem. So instead of looping through a ResultSet, you can now handle it with an if statement. e.g. f (result.isEmpty()) {…}
+
+## Lesson 6 Resource lifecycles. 2026-10-19
+*Concept:* hashing vs. encryption, salts, slow hashes, constant-time comparison.
+
+This whole lesson was about safely storing passwords and keeping them secure.
+Hashing is one way and can not be undone. Encryption is faster but it can be reversed.
+It is best to use hashing. Salt is an extra layer of protection. 
+The old code used sha256 in was hardened by using Bcrypt.
