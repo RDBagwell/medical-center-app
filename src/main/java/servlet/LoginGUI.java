@@ -27,7 +27,7 @@ public class LoginGUI {
         UpdateUser updateUser = new UpdateUser(frame);
 
         // Add the login panel to the frame
-        frame.add(loginPanel, BorderLayout.CENTER);
+        frame.add(addUser, BorderLayout.CENTER);
 
         // Center the frame on the screen
         frame.setLocationRelativeTo(null);

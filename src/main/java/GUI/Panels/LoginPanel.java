@@ -1,9 +1,11 @@
 package GUI.Panels;
 
+import helper.CredentialsValidator;
 import helper.Helper;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 
 public class LoginPanel extends JPanel {
 
@@ -33,6 +35,7 @@ public class LoginPanel extends JPanel {
         loginButton.addActionListener(event-> {
             String username = usernameField.getText();
             String password = new String(passwordField.getPassword());
+
             if (Helper.checkUser(username,password)) {
                 // Create an instance of the MainApplicationPanel class
                 MainApplicationPanel mainPanel = new MainApplicationPanel();

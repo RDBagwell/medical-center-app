@@ -1,11 +1,13 @@
 package GUI.Panels;
 
 import Model.User;
+import helper.CredentialsValidator;
 import helper.PasswordHasher;
 
 import javax.swing.*;
 import java.awt.*;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Optional;
 
 public class AddUser extends JPanel {
@@ -33,13 +35,19 @@ public class AddUser extends JPanel {
         add(addButton);
 
         // Add ActionListener to the Add User button
-        addButton.addActionListener(event-> {
-            String userName = usernameField.getText();
+        addButton.addActionListener(event -> {
+            String userName = usernameField.getText().strip();
             String password = new String(passwordField.getPassword());
+
+            List<String> errors = CredentialsValidator.validate(userName, password);
+            if (!errors.isEmpty()) {
+                JOptionPane.showMessageDialog(frame, String.join("\n", errors), "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
 
             try {
                 Optional<User> existing = User.getUser(userName);
-                if(existing.isEmpty()){
+                if (existing.isEmpty()) {
                     String hashed = PasswordHasher.hash(password);
                     Object[] data = {userName, hashed};
                     User.add(data);

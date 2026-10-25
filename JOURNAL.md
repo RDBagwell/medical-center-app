@@ -91,3 +91,20 @@ This whole lesson was about safely storing passwords and keeping them secure.
 Hashing is one way and can not be undone. Encryption is faster but it can be reversed.
 It is best to use hashing. Salt is an extra layer of protection. 
 The old code used sha256 in was hardened by using Bcrypt.
+
+## Lesson 7 First tests. 2026-10-25
+*Concept:* automated tests as a safety net; what to test and what not to.
+
+This lesson was about writing unit tests in Java.
+Automated tests are used to check if our code works the way it is supposed to without having to test 
+everything manually. 
+A good test checks the behavior through the public contract, meaning it tests what the user or another part of 
+the program can actually see instead of how the code works internally. Each test should focus on one behavior, 
+cover boundary pairs such as valid and invalid inputs, and be run once before fixing the code to make sure it 
+fails for the right reason. 
+In Laravel, we can use PHPUnit or Pest to write tests and run them with php artisan test, while 
+$request->validate() can check incoming data against rules. 
+In Java, we use JUnit and the @Test annotation to identify test methods, then run mvn test, 
+which uses Maven Surefire to execute the tests as part of the build lifecycle. 
+We can also create a separate validator that checks the input and returns a List<String> of error messages, 
+making it easier to test the validation logic without needing a database or other parts of the application.

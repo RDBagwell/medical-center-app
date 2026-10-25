@@ -1,11 +1,13 @@
 package GUI.Panels;
 
 import Model.User;
+import helper.CredentialsValidator;
 import helper.PasswordHasher;
 
 import javax.swing.*;
 import java.awt.*;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Optional;
 
 public class UpdateUser extends JPanel {
@@ -29,8 +31,14 @@ public class UpdateUser extends JPanel {
 
         updateButton.addActionListener(event -> {
             String[] columns = new String[]{"password"};
-            String userName = usernameField.getText();
+            String userName = usernameField.getText().strip();
             String password = new String(passwordField.getPassword());
+
+            List<String> errors = CredentialsValidator.validate(userName, password);
+            if (!errors.isEmpty()) {
+                JOptionPane.showMessageDialog(frame, String.join("\n", errors), "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
 
             try {
                 Optional<User> existing = User.getUser(userName);
@@ -45,7 +53,7 @@ public class UpdateUser extends JPanel {
                     frame.revalidate();
                     frame.repaint();
                 } else {
-                    JOptionPane.showMessageDialog(frame, "No such use", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(frame, "No such user", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             } catch (SQLException e) {
                 throw new RuntimeException(e);
