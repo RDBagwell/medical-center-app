@@ -1,14 +1,14 @@
 package helper;
 
-import Model.User;
+import model.User;
 
 import java.sql.SQLException;
 import java.util.Optional;
 
 
-public class Helper {
+public class Authenticator {
 
-    public static boolean checkUser(String userName, String password) {
+    public static boolean authenticate(String userName, String password) {
         try {
             Optional<User> result = User.getUser(userName);
             if (result.isEmpty()) {

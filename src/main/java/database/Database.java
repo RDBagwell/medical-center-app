@@ -5,10 +5,10 @@ import config.AppConfig;
 import java.sql.*;
 import java.util.Arrays;
 
-public class database implements AutoCloseable {
+public class Database implements AutoCloseable {
     private final Connection con;
 
-    public database() throws SQLException {
+    public Database() throws SQLException {
         String userName = AppConfig.MYSQL_USER;
         String password = AppConfig.MYSQL_PASSWORD;
         String url = AppConfig.DB_URL;

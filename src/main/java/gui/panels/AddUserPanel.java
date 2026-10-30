@@ -1,6 +1,6 @@
-package GUI.Panels;
+package gui.panels;
 
-import Model.User;
+import model.User;
 import helper.CredentialsValidator;
 import helper.PasswordHasher;
 
@@ -10,27 +10,32 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
-public class UpdateUser extends JPanel {
-    public UpdateUser(JFrame frame) {
-        setLayout(new FlowLayout(FlowLayout.LEFT));
+public class AddUserPanel extends JPanel {
 
+    public AddUserPanel(JFrame frame) {
+        setLayout(new FlowLayout(FlowLayout.LEFT));
+        // Create text fields for username and password
         JTextField usernameField = new JTextField(77);
         JPasswordField passwordField = new JPasswordField(77);
 
+        // Create labels for text fields
         JLabel usernameLabel = new JLabel("Username:");
         JLabel passwordLabel = new JLabel("Password:");
 
+        // Add components to the login panel
         add(usernameLabel);
         add(usernameField);
         add(passwordLabel);
         add(passwordField);
 
-        JButton updateButton = new JButton("Update User");
+        // Create a JButton for Add User
+        JButton addButton = new JButton("Add User");
 
-        add(updateButton);
+        // Add the Add User button to the Add User panel
+        add(addButton);
 
-        updateButton.addActionListener(event -> {
-            String[] columns = new String[]{"password"};
+        // Add ActionListener to the Add User button
+        addButton.addActionListener(event -> {
             String userName = usernameField.getText().strip();
             String password = new String(passwordField.getPassword());
 
@@ -42,10 +47,10 @@ public class UpdateUser extends JPanel {
 
             try {
                 Optional<User> existing = User.getUser(userName);
-                if (existing.isPresent()) {
+                if (existing.isEmpty()) {
                     String hashed = PasswordHasher.hash(password);
-                    Object[] data = {hashed};
-                    User.updateUser(columns, data, "id = ?", existing.get().id());
+                    Object[] data = {userName, hashed};
+                    User.add(data);
                     LoginPanel loginPanel = new LoginPanel(frame);
                     // Add the main panel to the frame
                     frame.getContentPane().removeAll(); // Remove previous components
@@ -53,7 +58,7 @@ public class UpdateUser extends JPanel {
                     frame.revalidate();
                     frame.repaint();
                 } else {
-                    JOptionPane.showMessageDialog(frame, "No such user", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(frame, "User already exists", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             } catch (SQLException e) {
                 throw new RuntimeException(e);

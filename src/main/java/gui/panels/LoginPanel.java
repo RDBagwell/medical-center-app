@@ -1,11 +1,9 @@
-package GUI.Panels;
+package gui.panels;
 
-import helper.CredentialsValidator;
-import helper.Helper;
+import helper.Authenticator;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.List;
 
 public class LoginPanel extends JPanel {
 
@@ -36,7 +34,7 @@ public class LoginPanel extends JPanel {
             String username = usernameField.getText();
             String password = new String(passwordField.getPassword());
 
-            if (Helper.checkUser(username,password)) {
+            if (Authenticator.authenticate(username,password)) {
                 // Create an instance of the MainApplicationPanel class
                 MainApplicationPanel mainPanel = new MainApplicationPanel();
                 // Add the main panel to the frame

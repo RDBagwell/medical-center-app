@@ -1,6 +1,6 @@
-package Model;
+package model;
 
-import database.database;
+import database.Database;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,7 +16,7 @@ public record User(int id, String userName, String passwordHash) {
     }
 
     public static void add(Object[] data) throws SQLException {
-        try (database db = new database()) {
+        try (Database db = new Database()) {
             String[] columns = {"user_name", "password"};
             db.insert("users", columns, data);
         }
@@ -25,7 +25,7 @@ public record User(int id, String userName, String passwordHash) {
     public static List<User> getUsers() throws SQLException {
         String[] filters = {};
         try (
-                database db = new database();
+                Database db = new Database();
                 ResultSet rs = db.select("users", filters, "", "")
         ) {
             List<User> users = new ArrayList<>();
@@ -41,7 +41,7 @@ public record User(int id, String userName, String passwordHash) {
         String[] filters = {};
         String where = "user_name = ?";
         try (
-                database db = new database();
+                Database db = new Database();
                 ResultSet rs = db.select("users", filters, where, "", userName)
         ) {
             if (!rs.next()) {
@@ -52,13 +52,13 @@ public record User(int id, String userName, String passwordHash) {
         }
     }
 
-    public static void updateUser(
+    public static void update(
             String[] columns,
             Object[] vals,
             String clause,
             Object... whereParams
     ) throws SQLException {
-        try (database db = new database()) {
+        try (Database db = new Database()) {
             db.update("users", columns, vals, clause, whereParams);
         }
     }
