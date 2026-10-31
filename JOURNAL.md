@@ -108,3 +108,22 @@ In Java, we use JUnit and the @Test annotation to identify test methods, then ru
 which uses Maven Surefire to execute the tests as part of the build lifecycle. 
 We can also create a separate validator that checks the input and returns a List<String> of error messages, 
 making it easier to test the validation logic without needing a database or other parts of the application.
+
+## Lesson 8 Conventions and clean-up. 2026-10-30
+*Concept:* code is read far more than it's written.
+
+Conventions and meaningful names are important because code is read much more often than it is written. 
+Clear names help other developers understand what the code does, while dead code can mislead them into 
+thinking it is still being used. 
+Comments should explain why something is done rather than simply repeating what the code already says. 
+In PHP, PSR-1 and PSR-12 establish standards for naming and formatting, 
+while PSR-4 defines how namespaces map to directory structures. 
+Matching a namespace to its folder is a convention that helps with organization, 
+but it is not something the PHP compiler enforces.
+
+In Java, packages are typically named using lowercase letters, classes use nouns, 
+and methods use verbs to describe their actions. 
+Java also enforces certain naming rules at compile time, 
+such as requiring a public class's name to match its filename. 
+These conventions and rules make code easier to navigate, maintain, and understand, 
+especially when working with other developers.

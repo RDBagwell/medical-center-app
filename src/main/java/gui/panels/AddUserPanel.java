@@ -1,11 +1,12 @@
 package gui.panels;
 
-import model.User;
+import gui.Navigator;
 import helper.CredentialsValidator;
 import helper.PasswordHasher;
+import model.User;
 
 import javax.swing.*;
-import java.awt.*;
+import java.awt.FlowLayout;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
@@ -14,27 +15,22 @@ public class AddUserPanel extends JPanel {
 
     public AddUserPanel(JFrame frame) {
         setLayout(new FlowLayout(FlowLayout.LEFT));
-        // Create text fields for username and password
+
         JTextField usernameField = new JTextField(77);
         JPasswordField passwordField = new JPasswordField(77);
 
-        // Create labels for text fields
         JLabel usernameLabel = new JLabel("Username:");
         JLabel passwordLabel = new JLabel("Password:");
 
-        // Add components to the login panel
         add(usernameLabel);
         add(usernameField);
         add(passwordLabel);
         add(passwordField);
 
-        // Create a JButton for Add User
         JButton addButton = new JButton("Add User");
 
-        // Add the Add User button to the Add User panel
         add(addButton);
 
-        // Add ActionListener to the Add User button
         addButton.addActionListener(event -> {
             String userName = usernameField.getText().strip();
             String password = new String(passwordField.getPassword());
@@ -51,12 +47,7 @@ public class AddUserPanel extends JPanel {
                     String hashed = PasswordHasher.hash(password);
                     Object[] data = {userName, hashed};
                     User.add(data);
-                    LoginPanel loginPanel = new LoginPanel(frame);
-                    // Add the main panel to the frame
-                    frame.getContentPane().removeAll(); // Remove previous components
-                    frame.add(loginPanel);
-                    frame.revalidate();
-                    frame.repaint();
+                    Navigator.show(frame, new LoginPanel(frame));
                 } else {
                     JOptionPane.showMessageDialog(frame, "User already exists", "Error", JOptionPane.ERROR_MESSAGE);
                 }

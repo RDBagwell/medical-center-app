@@ -1,11 +1,12 @@
 package gui.panels;
 
-import model.User;
+import gui.Navigator;
 import helper.CredentialsValidator;
 import helper.PasswordHasher;
+import model.User;
 
 import javax.swing.*;
-import java.awt.*;
+import java.awt.FlowLayout;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
@@ -46,12 +47,7 @@ public class UpdateUserPanel extends JPanel {
                     String hashed = PasswordHasher.hash(password);
                     Object[] data = {hashed};
                     User.update(columns, data, "id = ?", existing.get().id());
-                    LoginPanel loginPanel = new LoginPanel(frame);
-                    // Add the main panel to the frame
-                    frame.getContentPane().removeAll(); // Remove previous components
-                    frame.add(loginPanel);
-                    frame.revalidate();
-                    frame.repaint();
+                    Navigator.show(frame, new LoginPanel(frame));
                 } else {
                     JOptionPane.showMessageDialog(frame, "No such user", "Error", JOptionPane.ERROR_MESSAGE);
                 }

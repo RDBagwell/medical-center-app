@@ -62,7 +62,7 @@ public class Database implements AutoCloseable {
         if (clause.isBlank()) {
             throw new IllegalArgumentException("UPDATE requires a WHERE condition");
         }
-        if(columns.length != vals.length){
+        if (columns.length != vals.length) {
             throw new IllegalArgumentException("columns and vals need to be the same length");
         }
         final String where = " WHERE " + clause;

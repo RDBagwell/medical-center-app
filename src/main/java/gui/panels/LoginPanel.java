@@ -1,51 +1,39 @@
 package gui.panels;
 
+import gui.Navigator;
 import helper.Authenticator;
 
 import javax.swing.*;
-import java.awt.*;
+import java.awt.FlowLayout;
 
 public class LoginPanel extends JPanel {
 
     public LoginPanel(JFrame frame) {
         setLayout(new FlowLayout(FlowLayout.LEFT));
-        // Create text fields for username and password
         JTextField usernameField = new JTextField(77);
         JPasswordField passwordField = new JPasswordField(77);
 
-        // Create labels for text fields
         JLabel usernameLabel = new JLabel("Username:");
         JLabel passwordLabel = new JLabel("Password:");
 
-        // Add components to the login panel
         add(usernameLabel);
         add(usernameField);
         add(passwordLabel);
         add(passwordField);
 
-        // Create a JButton for login
         JButton loginButton = new JButton("Login");
 
-        // Add the login button to the login panel
         add(loginButton);
 
-        // Add ActionListener to the login button
-        loginButton.addActionListener(event-> {
-            String username = usernameField.getText();
+        loginButton.addActionListener(event -> {
+            String username = usernameField.getText().strip();
             String password = new String(passwordField.getPassword());
 
-            if (Authenticator.authenticate(username,password)) {
-                // Create an instance of the MainApplicationPanel class
-                MainApplicationPanel mainPanel = new MainApplicationPanel();
-                // Add the main panel to the frame
-                frame.getContentPane().removeAll(); // Remove previous components
-                frame.add(mainPanel);
-                frame.revalidate();
-                frame.repaint();
+            if (Authenticator.authenticate(username, password)) {
+                Navigator.show(frame, new MainApplicationPanel());
             } else {
                 JOptionPane.showMessageDialog(frame, "Invalid username or password", "Error", JOptionPane.ERROR_MESSAGE);
             }
-            // Clear the fields after checking
             usernameField.setText("");
             passwordField.setText("");
         });
