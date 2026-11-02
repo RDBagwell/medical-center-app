@@ -1,7 +1,7 @@
 package gui.panels;
 
 import gui.Navigator;
-import helper.Authenticator;
+import service.UserService;
 
 import javax.swing.*;
 import java.awt.FlowLayout;
@@ -29,8 +29,8 @@ public class LoginPanel extends JPanel {
             String username = usernameField.getText().strip();
             String password = new String(passwordField.getPassword());
 
-            if (Authenticator.authenticate(username, password)) {
-                Navigator.show(frame, new MainApplicationPanel());
+            if (UserService.authenticate(username, password)) {
+                Navigator.show(frame, new MainApplicationPanel(frame));
             } else {
                 JOptionPane.showMessageDialog(frame, "Invalid username or password", "Error", JOptionPane.ERROR_MESSAGE);
             }

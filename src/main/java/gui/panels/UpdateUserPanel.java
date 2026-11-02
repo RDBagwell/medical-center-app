@@ -1,15 +1,11 @@
 package gui.panels;
 
 import gui.Navigator;
-import helper.CredentialsValidator;
-import helper.PasswordHasher;
-import model.User;
+import service.UserService;
 
 import javax.swing.*;
 import java.awt.FlowLayout;
-import java.sql.SQLException;
 import java.util.List;
-import java.util.Optional;
 
 public class UpdateUserPanel extends JPanel {
     public UpdateUserPanel(JFrame frame) {
@@ -31,29 +27,16 @@ public class UpdateUserPanel extends JPanel {
         add(updateButton);
 
         updateButton.addActionListener(event -> {
-            String[] columns = new String[]{"password"};
             String userName = usernameField.getText().strip();
             String password = new String(passwordField.getPassword());
 
-            List<String> errors = CredentialsValidator.validate(userName, password);
+            List<String> errors = UserService.changePassword(userName, password);
             if (!errors.isEmpty()) {
                 JOptionPane.showMessageDialog(frame, String.join("\n", errors), "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
-            try {
-                Optional<User> existing = User.getUser(userName);
-                if (existing.isPresent()) {
-                    String hashed = PasswordHasher.hash(password);
-                    Object[] data = {hashed};
-                    User.update(columns, data, "id = ?", existing.get().id());
-                    Navigator.show(frame, new LoginPanel(frame));
-                } else {
-                    JOptionPane.showMessageDialog(frame, "No such user", "Error", JOptionPane.ERROR_MESSAGE);
-                }
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
+            Navigator.show(frame, new LoginPanel(frame));
         });
     }
 }
