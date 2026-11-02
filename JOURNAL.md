@@ -127,3 +127,13 @@ Java also enforces certain naming rules at compile time,
 such as requiring a public class's name to match its filename. 
 These conventions and rules make code easier to navigate, maintain, and understand, 
 especially when working with other developers.
+
+## Lesson 9 Layers and separation of concerns. 2026-11-02
+*Concept:* the UI shouldn't know about SQL.
+
+Code is split into layers to keep responsibilities separate and make it easier to maintain, 
+and calls only go downward so each layer depends on the one below it. 
+In Laravel, a thin controller passes work to a service or action class, 
+which uses Eloquent, although Active Record mixes the model's data with database access. 
+In Java, the UI calls a service, which calls a repository, 
+while the model is a plain data record passed between layers.
