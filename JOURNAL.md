@@ -184,7 +184,8 @@ while the model is a plain data record passed between layers.
 
 ## Lesson 10 Interfaces and the repository pattern. 2026-11-02
 *Concept:* depend on abstractions, not implementations.
-**nterfaces let us depend on what something does rather than what it is, 
+
+Interfaces let us depend on what something does rather than what it is, 
 which makes code easier to change and test. In Laravel, 
 we use Contracts and bind an interface to its implementation in a service provider, 
 while in Java, we use interface and implements, 
@@ -194,3 +195,13 @@ but dynamic dispatch calls the actual object's method at runtime.
 
 For naming, Java commonly uses UserRepository and JdbcUserRepository, 
 while PHP often uses UserRepositoryInterface for the contract.
+
+## Lesson 11 Immutability and value objects. 2026-11-03
+*Concept:* data that can't change can't surprise you.
+
+immutable objects and value objects help prevent bugs because shared data can't unexpectedly change, 
+invalid values can be prevented, and using the wrong type becomes a compile-time error. 
+In PHP and Laravel, we can use readonly properties, CarbonImmutable instead of mutable Carbon, 
+and custom casts, while Java uses records with compact constructors to validate data, .equals() 
+to compare values instead of == (which compares references for objects), and conversions at the 
+edges of the application to keep internal data consistent.

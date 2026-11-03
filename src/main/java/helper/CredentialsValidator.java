@@ -1,11 +1,12 @@
 package helper;
 
+import model.Username;
+
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
 public final class CredentialsValidator {
-    private static final int MAX_USERNAME_LENGTH = 96;
     private static final int MIN_PASSWORD_LENGTH = 8;
     private static final int MAX_PASSWORD_BYTES = 72;
 
@@ -19,8 +20,8 @@ public final class CredentialsValidator {
     private static void validateUserName(String userName, List<String> errors) {
         if (userName.isBlank()) {
             errors.add("Username is required");
-        } else if (userName.length() > MAX_USERNAME_LENGTH) {
-            errors.add("Username must be at most " + MAX_USERNAME_LENGTH + " characters");
+        } else if (userName.length() > Username.MAX_LENGTH) {
+            errors.add("Username must be at most " + Username.MAX_LENGTH + " characters");
         }
     }
 
