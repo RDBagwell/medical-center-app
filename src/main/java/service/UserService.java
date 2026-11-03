@@ -3,12 +3,15 @@ package service;
 import helper.CredentialsValidator;
 import helper.PasswordHasher;
 import model.User;
+import repository.JdbcUserRepository;
 import repository.UserRepository;
 
 import java.util.List;
 import java.util.Optional;
 
 public final class UserService {
+
+    private static final UserRepository users = new JdbcUserRepository();
 
     public static List<String> register(String userName, String password) {
 
@@ -17,12 +20,12 @@ public final class UserService {
             return errors;
         }
 
-        Optional<User> existing = UserRepository.findByUserName(userName);
+        Optional<User> existing = users.findByUserName(userName);
         if (existing.isPresent()) {
             return List.of("User already exists");
         }
         String hashed = PasswordHasher.hash(password);
-        UserRepository.add(userName, hashed);
+        users.add(userName, hashed);
 
         return List.of();
     }
@@ -33,18 +36,18 @@ public final class UserService {
             return errors;
         }
 
-        Optional<User> existing = UserRepository.findByUserName(userName);
+        Optional<User> existing = users.findByUserName(userName);
         if (existing.isEmpty()) {
             return List.of("No such user");
         }
         String hashed = PasswordHasher.hash(newPassword);
-        UserRepository.updatePassword(existing.get().id(), hashed);
+        users.updatePassword(existing.get().id(), hashed);
 
         return List.of();
     }
 
     public static boolean authenticate(String userName, String password) {
-        Optional<User> result = UserRepository.findByUserName(userName);
+        Optional<User> result = users.findByUserName(userName);
         if (result.isEmpty()) {
             return false;
         }
